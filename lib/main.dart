@@ -59,7 +59,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
     }
 
     return Container(
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
+        padding: EdgeInsets.all(20.0),
         child: Form(
             key: _cachFlowFormKey,
             child: Column(
