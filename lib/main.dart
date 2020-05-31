@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './cashflowGuide.dart';
 
 void main() {
   runApp(CashFlow());
@@ -9,9 +10,9 @@ class CashFlow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '20대 정신 분리 아니 통장 분리 툴',
+      title: '20대 통장 분리 가이드',
       home: Scaffold(
-        appBar: AppBar(title: Text('20대 정신 분리 아니 통장 분리 툴')),
+        appBar: AppBar(title: Text('20대 통장 분리 가이드')),
         body: CashFlowForm(),
       ),
     );
@@ -27,6 +28,20 @@ class CashFlowForm extends StatefulWidget {
 
 class _CashFlowFormState extends State<CashFlowForm> {
   final _cachFlowFormKey = GlobalKey<FormState>();
+  int _totalIncome;
+  int _fixedCost;
+  int _variableCost;
+  int _emergencyFund;
+  int _otherCost;
+
+  void setFieldValue(value, fieldName) {
+    var parsedValue = int.tryParse(value);
+    if (parsedValue is int) {
+      setState(() {
+        fieldName = parsedValue;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +75,15 @@ class _CashFlowFormState extends State<CashFlowForm> {
                       if (valueNumber == 0) {
                         return '진짜요..? 👀 1원이라도 벌고있다고 해줘요.';
                       }
-
                       return commonFieldValidator(value);
+                    },
+                    onSaved: (value) {
+                      var parsedValue = int.tryParse(value);
+                      if (parsedValue is int) {
+                        setState(() {
+                          _totalIncome = parsedValue;
+                        });
+                      }
                     },
                   ),
                   TextFormField(
@@ -70,6 +92,14 @@ class _CashFlowFormState extends State<CashFlowForm> {
                       labelText: '* 월 고정지출',
                     ),
                     validator: (value) => commonFieldValidator(value),
+                    onSaved: (value) {
+                      var parsedValue = int.tryParse(value);
+                      if (parsedValue is int) {
+                        setState(() {
+                          _fixedCost = parsedValue;
+                        });
+                      }
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -77,6 +107,14 @@ class _CashFlowFormState extends State<CashFlowForm> {
                       labelText: '* 월 변동지출',
                     ),
                     validator: (value) => commonFieldValidator(value),
+                    onSaved: (value) {
+                      var parsedValue = int.tryParse(value);
+                      if (parsedValue is int) {
+                        setState(() {
+                          _variableCost = parsedValue;
+                        });
+                      }
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -84,6 +122,14 @@ class _CashFlowFormState extends State<CashFlowForm> {
                       labelText: '* 비상자금',
                     ),
                     validator: (value) => commonFieldValidator(value),
+                    onSaved: (value) {
+                      var parsedValue = int.tryParse(value);
+                      if (parsedValue is int) {
+                        setState(() {
+                          _emergencyFund = parsedValue;
+                        });
+                      }
+                    },
                   ),
                   TextFormField(
                     decoration: const InputDecoration(
@@ -91,12 +137,31 @@ class _CashFlowFormState extends State<CashFlowForm> {
                       labelText: '* 기타',
                     ),
                     validator: (value) => commonFieldValidator(value),
+                    onSaved: (value) {
+                      var parsedValue = int.tryParse(value);
+                      if (parsedValue is int) {
+                        setState(() {
+                          _otherCost = parsedValue;
+                        });
+                      }
+                    },
                   ),
                   RaisedButton(
                     onPressed: () {
+                      final form = _cachFlowFormKey.currentState;
                       if (_cachFlowFormKey.currentState.validate()) {
-                        Scaffold.of(context).showSnackBar(
-                            SnackBar(content: Text('잠시만 기다려주세요.')));
+                        form.save();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CashFlowGuide(
+                                    totalIncome: _totalIncome,
+                                    fixedCost: _fixedCost,
+                                    variableCost: _variableCost,
+                                    emergencyFund: _emergencyFund,
+                                    otherCost: _otherCost,
+                                  )),
+                        );
                       }
                     },
                     child: Text('가이드 확인하기'),
