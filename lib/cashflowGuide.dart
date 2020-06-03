@@ -66,24 +66,16 @@ class CashFlowGuide extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Column(children: <Widget>[
-          Expanded(child: CashflowChart(_createData())),
-          Row(
-            children: <Widget>[
-              Text('고정지출:'),
-              fixedCost + variableCost >=
-                      guide['fixedCost'] + guide['variableCost']
-                  ? Text('지출이 좀 많네요!')
-                  : Text('지출을 늘리셔도 괜찮습니다!'),
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Text('비상자금:'),
-              emergencyFund <= guide['emergencyFund']
-                  ? Text('비상자금을 더 준비하셔야 합니다!')
-                  : Text('훌륭합니다!'),
-            ],
-          ),
+          Container(
+              margin: EdgeInsets.only(bottom: 30),
+              height: 300,
+              child: Expanded(child: CashflowChart(_createData()))),
+          fixedCost + variableCost >= guide['fixedCost'] + guide['variableCost']
+              ? Text('고정지출이 좀 많네요!')
+              : Text('고정지출을 늘리셔도 괜찮습니다!'),
+          emergencyFund <= guide['emergencyFund']
+              ? Text('비상자금을 더 준비하셔야 합니다!')
+              : Text('훌륭합니다!'),
           Text('비상자금의 한도는 $maxEmergencyFund 만 원입니다.'),
           Text('적정 적금은 $savingsAmount 만 원입니다.'),
           Text('비상자금의 한도는 $insuranceAmount 만 원입니다.'),
