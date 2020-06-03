@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'cashflowChart.dart';
+
 class CashFlowGuide extends StatelessWidget {
   CashFlowGuide(
       {this.totalIncome,
@@ -27,10 +29,11 @@ class CashFlowGuide extends StatelessWidget {
     final insuranceAmount = totalIncome / 10;
 
     return Scaffold(
-      appBar: AppBar(title: Text('이렇게 해보시오.')),
+      appBar: AppBar(title: Text('이렇게 해보세요.')),
       body: Container(
         padding: EdgeInsets.all(20.0),
-        child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
+        child: Column(children: <Widget>[
+          Expanded(child: SimpleBarChart.withSampleData()),
           Row(
             children: <Widget>[
               Text('고정지출:'),
@@ -51,12 +54,6 @@ class CashFlowGuide extends StatelessWidget {
           Text('비상자금의 한도는 $maxEmergencyFund 만 원입니다.'),
           Text('적정 적금은 $savingsAmount 만 원입니다.'),
           Text('비상자금의 한도는 $insuranceAmount 만 원입니다.'),
-
-          // TODO:: 최상단 좌측에 버튼으로 변경하기
-          RaisedButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('뒤로 가기'),
-          ),
         ]),
       ),
     );
