@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'cashflowChart.dart';
 
 class CashFlowGuide extends StatelessWidget {
@@ -18,22 +18,55 @@ class CashFlowGuide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, double> guide = {
-      'fixedCost': totalIncome * 0.1,
-      'variableCost': totalIncome * 0.3,
-      'emergencyFund': totalIncome * 0.1,
-      'otherCost': totalIncome * 0.4,
+    final Map<String, int> guide = {
+      'fixedCost': (totalIncome * 0.1).round(),
+      'variableCost': (totalIncome * 0.3).round(),
+      'emergencyFund': (totalIncome * 0.1).round(),
+      'otherCost': (totalIncome * 0.4).round(),
     };
     final maxEmergencyFund = totalIncome * 3;
     final savingsAmount = otherCost / 4;
     final insuranceAmount = totalIncome / 10;
+
+    List<charts.Series<OrdinalCashflow, String>> _createData() {
+      final data = [
+        new OrdinalCashflow('고정지출', fixedCost),
+        new OrdinalCashflow('변동지출', variableCost),
+        new OrdinalCashflow('비상자금', emergencyFund),
+        new OrdinalCashflow('기타', otherCost),
+      ];
+
+      final guideData = [
+        new OrdinalCashflow('고정지출', guide['fixedCost']),
+        new OrdinalCashflow('변동지출', guide['variableCost']),
+        new OrdinalCashflow('비상자금', guide['emergencyFund']),
+        new OrdinalCashflow('기타', guide['otherCost']),
+      ];
+
+      return [
+        new charts.Series<OrdinalCashflow, String>(
+          id: 'Cashflow',
+          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
+          measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
+          data: data,
+        ),
+        new charts.Series<OrdinalCashflow, String>(
+          id: 'Guide-Cashflow',
+          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
+          measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
+          data: guideData,
+        ),
+      ];
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text('이렇게 해보세요.')),
       body: Container(
         padding: EdgeInsets.all(20.0),
         child: Column(children: <Widget>[
-          Expanded(child: SimpleBarChart.withSampleData()),
+          Expanded(child: CashflowChart(_createData())),
           Row(
             children: <Widget>[
               Text('고정지출:'),
