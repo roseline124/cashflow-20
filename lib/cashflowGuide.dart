@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'fundMoneyFlow.dart';
-import 'cashflowChart.dart';
+import 'guideChart.dart';
 
 class CashFlowGuide extends StatelessWidget {
   CashFlowGuide(
@@ -71,7 +71,7 @@ class CashFlowGuide extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(bottom: 30),
               height: 300,
-              child: Expanded(child: CashflowChart(_createData()))),
+              child: Expanded(child: GuideChart(_createData()))),
           fixedCost + variableCost >= guide['fixedCost'] + guide['variableCost']
               ? Text('고정지출이 좀 많네요!')
               : Text('고정지출을 늘리셔도 괜찮습니다!'),
