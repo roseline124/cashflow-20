@@ -5,6 +5,19 @@ void main() {
   runApp(CashFlow());
 }
 
+String commonFieldValidator(value) {
+  if (value.isEmpty) {
+    return '에헤이. 채우셔야죠.';
+  }
+
+  int valueNumber = int.tryParse(value);
+  if (!(valueNumber is int)) {
+    return '숫자로 적어주세요 :(';
+  }
+
+  return null;
+}
+
 class CashFlow extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -45,19 +58,6 @@ class _CashFlowFormState extends State<CashFlowForm> {
 
   @override
   Widget build(BuildContext context) {
-    String commonFieldValidator(value) {
-      if (value.isEmpty) {
-        return '에헤이. 채우셔야죠.';
-      }
-
-      int valueNumber = int.tryParse(value);
-      if (!(valueNumber is int)) {
-        return '숫자로 적어주세요 :(';
-      }
-
-      return null;
-    }
-
     return Container(
         padding: EdgeInsets.all(20.0),
         child: Form(

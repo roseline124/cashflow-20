@@ -10,7 +10,18 @@ class CashflowChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new charts.BarChart(seriesList,
-        animate: animate, barGroupingType: charts.BarGroupingType.grouped);
+        animate: animate, barGroupingType: charts.BarGroupingType.grouped, behaviors: [
+        new charts.SeriesLegend(
+          position: charts.BehaviorPosition.top,
+          outsideJustification: charts.OutsideJustification.endDrawArea,
+          horizontalFirst: false,
+          desiredMaxRows: 2,
+          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+          entryTextStyle: charts.TextStyleSpec(
+              color: charts.Color(r: 12, g: 63, b: 191),
+              fontSize: 11),
+        )
+      ],);
   }
 }
 

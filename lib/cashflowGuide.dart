@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+
+import 'fundMoneyFlow.dart';
 import 'cashflowChart.dart';
 
 class CashFlowGuide extends StatelessWidget {
@@ -45,14 +47,14 @@ class CashFlowGuide extends StatelessWidget {
 
       return [
         new charts.Series<OrdinalCashflow, String>(
-          id: 'Cashflow',
+          id: '현재 지출',
           colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
           domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
           measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
           data: data,
         ),
         new charts.Series<OrdinalCashflow, String>(
-          id: 'Guide-Cashflow',
+          id: '지출 가이드',
           colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
           domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
           measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
@@ -78,7 +80,13 @@ class CashFlowGuide extends StatelessWidget {
               : Text('훌륭합니다!'),
           Text('비상자금의 한도는 $maxEmergencyFund 만 원입니다.'),
           Text('적정 적금은 $savingsAmount 만 원입니다.'),
-          Text('비상자금의 한도는 $insuranceAmount 만 원입니다.'),
+          Text('적정 보험료는은 $insuranceAmount 만 원입니다.'),
+          RaisedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FundMoneyFlow()));
+              },
+              child: Text('투자는 어떻게 하고 계신가요?'))
         ]),
       ),
     );
