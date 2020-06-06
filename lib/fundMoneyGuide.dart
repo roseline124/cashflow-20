@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import 'main.dart';
 import 'guideChart.dart';
 
 class FundMoneyGuide extends StatelessWidget {
@@ -91,7 +92,10 @@ class FundMoneyGuide extends StatelessWidget {
                 : Text('보험료가 조금 과한 느낌이 있습니다.'),
             RaisedButton(
               onPressed: () {
-                Navigator.popUntil(context, ModalRoute.withName('/'));
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CashFlow()),
+                );
               },
               child: Text('처음부터 다시하기'),
             )
