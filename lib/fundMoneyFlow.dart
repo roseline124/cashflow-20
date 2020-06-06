@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 import 'fundMoneyGuide.dart';
+import 'widgets/SubmitButton.dart';
 
 class FundMoneyFlow extends StatelessWidget {
   const FundMoneyFlow({this.guideOtherCost});
@@ -12,6 +13,10 @@ class FundMoneyFlow extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: '투자 현황',
+      theme: ThemeData(
+        primaryColor: Colors.red[400],
+        accentColor: Colors.redAccent[400],
+      ),
       home: Scaffold(
           appBar: AppBar(
             title: Text('투자는 어떻게 하고 계신가요?'),
@@ -49,80 +54,97 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(50.0),
         child: Form(
             key: _fundMoneyFlowFormKey,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextFormField(
-                    decoration: getInputDecoration('적금 금액'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _savings = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('적금 금액'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _savings = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('투자 금액'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _installmentFund = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('투자 금액'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _installmentFund = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('장기저축 금액'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _longTermSavings = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('장기저축 금액'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _longTermSavings = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('보장성 보험 금액'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _guaranteedInsurance = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('보장성 보험 금액'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _guaranteedInsurance = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  RaisedButton(
-                    onPressed: () {
-                      final form = _fundMoneyFlowFormKey.currentState;
-                      if (_fundMoneyFlowFormKey.currentState.validate()) {
-                        form.save();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FundMoneyGuide(
-                                    guideOtherCost: guideOtherCost,
-                                    savings: _savings,
-                                    installmentFund: _installmentFund,
-                                    longTermSavings: _longTermSavings,
-                                    guaranteedInsurance: _guaranteedInsurance,
-                                  )),
-                        );
-                      }
-                    },
-                    child: Text('가이드 확인하기'),
-                  )
+                  Center(
+                      child: SubmitButton(
+                          label: '가이드 확인하기',
+                          onPressed: () {
+                            final form = _fundMoneyFlowFormKey.currentState;
+                            if (_fundMoneyFlowFormKey.currentState.validate()) {
+                              form.save();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FundMoneyGuide(
+                                          guideOtherCost: guideOtherCost,
+                                          savings: _savings,
+                                          installmentFund: _installmentFund,
+                                          longTermSavings: _longTermSavings,
+                                          guaranteedInsurance:
+                                              _guaranteedInsurance,
+                                        )),
+                              );
+                            }
+                          }))
                 ])));
   }
 }

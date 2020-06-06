@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
+
 import './cashflowGuide.dart';
+import 'widgets/SubmitButton.dart';
 
 void main() {
   runApp(CashFlow());
@@ -32,7 +34,7 @@ class CashFlow extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         body: new SplashScreen(
-            seconds: 60 * 60,
+            seconds: 3,
             navigateAfterSeconds: new AfterSplash(),
             title: new Text(
               '귀여운 20대들의\n통장분리 가이드',
@@ -40,12 +42,13 @@ class CashFlow extends StatelessWidget {
               style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             image: new Image.asset(
-              'static/images/launchImage.jpeg',
+              'static/images/launchImage.png',
               width: 150,
             ),
             photoSize: 100.0, // percent
             backgroundColor: Colors.white,
-            loaderColor: Colors.transparent),
+            loaderColor: Colors.blue,
+            loadingText: Text('잠시만 기다려주세요')),
       ),
     );
   }
@@ -55,6 +58,10 @@ class AfterSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.red[400],
+        accentColor: Colors.redAccent[400],
+      ),
       title: '20대 통장 분리 가이드',
       home: Scaffold(
         appBar: AppBar(title: Text('20대 통장 분리 가이드')),
@@ -91,79 +98,112 @@ class _CashFlowFormState extends State<CashFlowForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(50.0),
         child: Form(
             key: _cachFlowFormKey,
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  TextFormField(
-                    decoration: getInputDecoration('세후 월 소득'),
-                    validator: (value) {
-                      int valueNumber = int.tryParse(value);
-                      if (valueNumber == 0) {
-                        return '그럴 리 없습니다.';
-                      }
-                      return commonFieldValidator(value);
-                    },
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _totalIncome = parsedValue;
-                        });
-                      }
-                    },
+                  Container(
+                    margin: EdgeInsets.only(bottom: 20),
+                    child: Center(
+                        child: Text(
+                      '나의 현금 흐름은?',
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
+                    )),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('월 고정지출'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _fixedCost = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('세후 월 소득'),
+                      validator: (value) {
+                        int valueNumber = int.tryParse(value);
+                        if (valueNumber == 0) {
+                          return '그럴 리 없습니다.';
+                        }
+                        return commonFieldValidator(value);
+                      },
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _totalIncome = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('월 변동지출'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _variableCost = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('월 고정지출'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _fixedCost = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('비상자금'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _emergencyFund = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('월 변동지출'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _variableCost = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  TextFormField(
-                    decoration: getInputDecoration('기타자금'),
-                    validator: (value) => commonFieldValidator(value),
-                    onSaved: (value) {
-                      var parsedValue = int.tryParse(value);
-                      if (parsedValue is int) {
-                        setState(() {
-                          _otherCost = parsedValue;
-                        });
-                      }
-                    },
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('비상자금'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _emergencyFund = parsedValue;
+                          });
+                        }
+                      },
+                    ),
                   ),
-                  RaisedButton(
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 40),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      decoration: getInputDecoration('기타자금'),
+                      validator: (value) => commonFieldValidator(value),
+                      onSaved: (value) {
+                        var parsedValue = int.tryParse(value);
+                        if (parsedValue is int) {
+                          setState(() {
+                            _otherCost = parsedValue;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  Center(
+                      child: SubmitButton(
+                    label: '가이드 확인하기',
                     onPressed: () {
                       final form = _cachFlowFormKey.currentState;
                       if (_cachFlowFormKey.currentState.validate()) {
@@ -181,8 +221,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
                         );
                       }
                     },
-                    child: Text('가이드 확인하기'),
-                  )
+                  ))
                 ])));
   }
 }
