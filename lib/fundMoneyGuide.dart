@@ -89,6 +89,12 @@ class FundMoneyGuide extends StatelessWidget {
             guide['guaranteedInsurance'] > guaranteedInsurance
                 ? Text('보험료는 적당하지만, 내용이 중요합니다.')
                 : Text('보험료가 조금 과한 느낌이 있습니다.'),
+            RaisedButton(
+              onPressed: () {
+                Navigator.popUntil(context, ModalRoute.withName('/'));
+              },
+              child: Text('처음부터 다시하기'),
+            )
           ]),
         ),
       ),
