@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:splashscreen/splashscreen.dart';
 import './cashflowGuide.dart';
 
 void main() {
@@ -26,6 +27,31 @@ InputDecoration getInputDecoration(String label) {
 }
 
 class CashFlow extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        body: new SplashScreen(
+            seconds: 60 * 60,
+            navigateAfterSeconds: new AfterSplash(),
+            title: new Text(
+              '귀여운 20대들의\n통장분리 가이드',
+              textAlign: TextAlign.center,
+              style: new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            ),
+            image: new Image.asset(
+              'static/images/launchImage.jpeg',
+              width: 150,
+            ),
+            photoSize: 100.0, // percent
+            backgroundColor: Colors.white,
+            loaderColor: Colors.transparent),
+      ),
+    );
+  }
+}
+
+class AfterSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
