@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
-import 'fundMoneyGuide.dart';
-import 'widgets/SubmitButton.dart';
+import 'package:cashflow20/Widgets/SubmitButton.dart';
+import '../CashFlowScreen/CashFlowForm.dart';
+import './FundMoneyGuide.dart';
 
 class FundMoneyFlow extends StatelessWidget {
   const FundMoneyFlow({this.guideOtherCost});

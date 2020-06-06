@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'main.dart';
-import 'guideChart.dart';
+import 'package:cashflow20/main.dart';
+import 'package:cashflow20/Widgets/GuideChart.dart';
 
 class FundMoneyGuide extends StatelessWidget {
   FundMoneyGuide({
@@ -94,7 +94,7 @@ class FundMoneyGuide extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CashFlow()),
+                  MaterialPageRoute(builder: (context) => AfterSplash()),
                 );
               },
               child: Text('처음부터 다시하기'),

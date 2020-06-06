@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
-import 'fundMoneyFlow.dart';
-import 'guideChart.dart';
+import 'package:cashflow20/Widgets/GuideChart.dart';
+import '../FundMoneyFlowScreen/FundMoneyFlowForm.dart';
 
 class CashFlowGuide extends StatelessWidget {
   CashFlowGuide(
