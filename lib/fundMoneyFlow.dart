@@ -3,7 +3,9 @@ import 'main.dart';
 import 'fundMoneyGuide.dart';
 
 class FundMoneyFlow extends StatelessWidget {
-  const FundMoneyFlow({Key key}) : super(key: key);
+  const FundMoneyFlow({this.guideOtherCost});
+
+  final int guideOtherCost;
 
   @override
   Widget build(BuildContext context) {
@@ -13,26 +15,31 @@ class FundMoneyFlow extends StatelessWidget {
           appBar: AppBar(
             title: Text('투자는 어떻게 하고 계신가요?'),
             leading: BackButton(
-              color: Colors.black,
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
+                color: Colors.white,
+                onPressed: () => Navigator.of(context).pop()),
           ),
-          body: Container(child: FundMoneyFlowForm())),
+          body: Container(
+              child: FundMoneyFlowForm(
+            guideOtherCost: guideOtherCost,
+          ))),
     );
   }
 }
 
 class FundMoneyFlowForm extends StatefulWidget {
-  FundMoneyFlowForm({Key key}) : super(key: key);
+  FundMoneyFlowForm({this.guideOtherCost});
+  final int guideOtherCost;
 
   @override
-  _FundMoneyFlowFormState createState() => _FundMoneyFlowFormState();
+  _FundMoneyFlowFormState createState() =>
+      _FundMoneyFlowFormState(guideOtherCost: guideOtherCost);
 }
 
 class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
+  _FundMoneyFlowFormState({this.guideOtherCost});
   final _fundMoneyFlowFormKey = GlobalKey<FormState>();
+
+  final int guideOtherCost;
   int _savings; // 적금
   int _installmentFund; // 적립식펀드
   int _longTermSavings; // 장기저축
@@ -116,6 +123,7 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => FundMoneyGuide(
+                                    guideOtherCost: guideOtherCost,
                                     savings: _savings,
                                     installmentFund: _installmentFund,
                                     longTermSavings: _longTermSavings,

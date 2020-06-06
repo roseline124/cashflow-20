@@ -71,7 +71,9 @@ class CashFlowGuide extends StatelessWidget {
           Container(
               margin: EdgeInsets.only(bottom: 30),
               height: 300,
-              child: Expanded(child: GuideChart(_createData()))),
+              child: Flex(
+                  direction: Axis.horizontal,
+                  children: [Expanded(child: GuideChart(_createData()))])),
           fixedCost + variableCost >= guide['fixedCost'] + guide['variableCost']
               ? Text('고정지출이 좀 많네요!')
               : Text('고정지출을 늘리셔도 괜찮습니다!'),
@@ -83,8 +85,12 @@ class CashFlowGuide extends StatelessWidget {
           Text('적정 보험료는은 $insuranceAmount 만 원입니다.'),
           RaisedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FundMoneyFlow()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => FundMoneyFlow(
+                              guideOtherCost: guide['otherCost'],
+                            )));
               },
               child: Text('투자는 어떻게 하고 계신가요?'))
         ]),
