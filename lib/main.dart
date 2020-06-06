@@ -7,15 +7,22 @@ void main() {
 
 String commonFieldValidator(value) {
   if (value.isEmpty) {
-    return '에헤이. 채우셔야죠.';
+    return '금액을 입력해주세요.';
   }
 
   int valueNumber = int.tryParse(value);
   if (!(valueNumber is int)) {
-    return '숫자로 적어주세요 :(';
+    return '숫자로 적어주세요.';
   }
 
   return null;
+}
+
+InputDecoration getInputDecoration(String label) {
+  return InputDecoration(
+    hintText: '${label}을 적어주세요. (단위: 만 원)',
+    labelText: '* $label',
+  );
 }
 
 class CashFlow extends StatelessWidget {
@@ -65,14 +72,11 @@ class _CashFlowFormState extends State<CashFlowForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '세후 월 소득을 적어주세요. (단위: 만 원)',
-                      labelText: '* 월 급여',
-                    ),
+                    decoration: getInputDecoration('세후 월 소득'),
                     validator: (value) {
                       int valueNumber = int.tryParse(value);
                       if (valueNumber == 0) {
-                        return '진짜요..? 👀 1원이라도 벌고있다고 해줘요.';
+                        return '그럴 리 없습니다.';
                       }
                       return commonFieldValidator(value);
                     },
@@ -86,10 +90,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '월 고정지출을 적어주세요. (단위: 만 원)',
-                      labelText: '* 월 고정지출',
-                    ),
+                    decoration: getInputDecoration('월 고정지출'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -101,10 +102,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '월 변동지출을 적어주세요. (단위: 만 원)',
-                      labelText: '* 월 변동지출',
-                    ),
+                    decoration: getInputDecoration('월 변동지출'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -116,10 +114,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '비상자금을 적어주세요. (단위: 만 원)',
-                      labelText: '* 비상자금',
-                    ),
+                    decoration: getInputDecoration('비상자금'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -131,10 +126,7 @@ class _CashFlowFormState extends State<CashFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '적금, 투자, 저축, 보험 등 기타자금을 적어주세요. (단위: 만 원)',
-                      labelText: '* 기타',
-                    ),
+                    decoration: getInputDecoration('기타자금'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);

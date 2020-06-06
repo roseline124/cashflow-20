@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'main.dart';
 import 'fundMoneyGuide.dart';
 
@@ -55,10 +56,7 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '적금하고 있는 금액을 적어주세요. (단위: 만 원)',
-                      labelText: '* 적금',
-                    ),
+                    decoration: getInputDecoration('적금 금액'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -70,10 +68,7 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '투자하고 있는 금액을 적어주세요. (단위: 만 원)',
-                      labelText: '* 적립식 펀드',
-                    ),
+                    decoration: getInputDecoration('투자 금액'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -85,10 +80,7 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '저축하고 있는 금액을 적어주세요. (단위: 만 원)',
-                      labelText: '* 장기저축',
-                    ),
+                    decoration: getInputDecoration('장기저축 금액'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
@@ -100,10 +92,7 @@ class _FundMoneyFlowFormState extends State<FundMoneyFlowForm> {
                     },
                   ),
                   TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '보험에 들고 있는 금액을 적어주세요. (단위: 만 원)',
-                      labelText: '* 보장성 보험',
-                    ),
+                    decoration: getInputDecoration('보장성 보험 금액'),
                     validator: (value) => commonFieldValidator(value),
                     onSaved: (value) {
                       var parsedValue = int.tryParse(value);
