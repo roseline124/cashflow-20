@@ -17,11 +17,11 @@ class GuideChart extends StatelessWidget {
         new charts.SeriesLegend(
           position: charts.BehaviorPosition.top,
           outsideJustification: charts.OutsideJustification.endDrawArea,
-          horizontalFirst: false,
+          horizontalFirst: true,
           desiredMaxRows: 2,
-          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 4.0),
+          cellPadding: new EdgeInsets.only(right: 10.0, bottom: 10.0),
           entryTextStyle: charts.TextStyleSpec(
-              color: charts.Color(r: 12, g: 63, b: 191), fontSize: 11),
+              color: charts.Color(r: 255, g: 102, b: 102), fontSize: 11),
         )
       ],
     );

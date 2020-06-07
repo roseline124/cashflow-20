@@ -39,7 +39,7 @@ class AfterSplash extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         primaryColor: Colors.red[400],
-        accentColor: Colors.redAccent[400],
+        accentColor: Colors.amber[400],
       ),
       title: '20대 통장 분리 가이드',
       home: Scaffold(

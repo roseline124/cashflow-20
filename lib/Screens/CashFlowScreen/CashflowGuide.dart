@@ -3,6 +3,8 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 import 'package:cashflow20/Widgets/GuideChart.dart';
 import '../FundMoneyFlowScreen/FundMoneyFlowForm.dart';
+import 'package:cashflow20/Widgets/SubmitButton.dart';
+import 'package:bubble/bubble.dart';
 
 class CashFlowGuide extends StatelessWidget {
   CashFlowGuide(
@@ -48,14 +50,15 @@ class CashFlowGuide extends StatelessWidget {
       return [
         new charts.Series<OrdinalCashflow, String>(
           id: '현재 지출',
-          colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+          colorFn: (_, __) => charts.ColorUtil.fromDartColor(Colors.amber[400]),
           domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
           measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
           data: data,
         ),
         new charts.Series<OrdinalCashflow, String>(
           id: '지출 가이드',
-          colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+          colorFn: (_, __) =>
+              charts.ColorUtil.fromDartColor(Colors.deepOrange[400]),
           domainFn: (OrdinalCashflow cashflow, _) => cashflow.category,
           measureFn: (OrdinalCashflow cashflow, _) => cashflow.amounts,
           data: guideData,
@@ -74,16 +77,43 @@ class CashFlowGuide extends StatelessWidget {
               child: Flex(
                   direction: Axis.horizontal,
                   children: [Expanded(child: GuideChart(_createData()))])),
-          fixedCost + variableCost >= guide['fixedCost'] + guide['variableCost']
-              ? Text('고정지출이 좀 많네요!')
-              : Text('고정지출을 늘리셔도 괜찮습니다!'),
-          emergencyFund <= guide['emergencyFund']
-              ? Text('비상자금을 더 준비하셔야 합니다!')
-              : Text('훌륭합니다!'),
-          Text('비상자금의 한도는 $maxEmergencyFund 만 원입니다.'),
-          Text('적정 적금은 $savingsAmount 만 원입니다.'),
-          Text('적정 보험료는은 $insuranceAmount 만 원입니다.'),
-          RaisedButton(
+          Padding(
+            padding: const EdgeInsets.only(bottom: 30.0),
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(50.0),
+                  child: Image.asset(
+                    'static/images/consultant.jpeg',
+                    height: 70.0,
+                    width: 70.0,
+                  ),
+                ),
+                Bubble(
+                  margin: BubbleEdges.only(top: 10),
+                  nip: BubbleNip.leftTop,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        fixedCost + variableCost >=
+                                guide['fixedCost'] + guide['variableCost']
+                            ? Text('고정지출이 좀 많네요!')
+                            : Text('고정지출을 늘리셔도 괜찮습니다!'),
+                        emergencyFund <= guide['emergencyFund']
+                            ? Text('비상자금을 더 준비하셔야 합니다!')
+                            : Text('훌륭합니다!'),
+                        Text('비상자금의 한도는 $maxEmergencyFund 만 원입니다.'),
+                        Text('적정 적금은 $savingsAmount 만 원입니다.'),
+                        Text('적정 보험료는은 $insuranceAmount 만 원입니다.'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SubmitButton(
               onPressed: () {
                 Navigator.push(
                     context,
@@ -92,7 +122,7 @@ class CashFlowGuide extends StatelessWidget {
                               guideOtherCost: guide['otherCost'],
                             )));
               },
-              child: Text('투자는 어떻게 하고 계신가요?'))
+              label: '투자는 어떻게 하고 계신가요?')
         ]),
       ),
     );
